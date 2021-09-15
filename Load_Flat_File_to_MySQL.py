@@ -4,9 +4,9 @@ import pandas as pd
 
 
 def main():
-    """Takes in the survey response flat file and loads the data into a MySQL database.
+    """Takes in the survey response flat file and creates a SQL text file of insert statements.
 
-    This command line script ingests the `Recreational Activity Survey (Responses)` flat file provided by Google Forms into a pandas dataframe, separates the fields given as comma seperated lists into their own dataframes, and loads all three dataframes into a MySQL database. 
+    This command line script ingests the `Recreational Activity Survey (Responses)` flat file provided by Google Forms into a pandas dataframe, separates the fields given as comma seperated lists into their own dataframes, and creates insert statements from those dataframes. Direct loading of the dataframes into the RDBMS isn't supported because the CCI Torch server requires a SSH connection, which isn't natively supported by SQLAlchemy.
     """
     logging.basicConfig(level=logging.INFO, format="[%(asctime)s] %(message)s")
 
@@ -59,18 +59,18 @@ def main():
     logging.info(f"`Activities` dataframe:\n{df_Activities.head()}")
 
 
-    #Section: Load Records into MySQL
-    #Subsection: Get MySQL Credentials
+    #Section: Create Insert Statement File
+    #Subsection: Find the Most Recent Response for the File Name
 
-    #Subsection: Open Connection to MySQL Server
+    #Subsection: Create the File
 
-    #Subsection: Load Data into Relation `Survey_Answers`
+    #Subsection: Create Insert Statements for Relation `Survey_Answers`
 
-    #Subsection: Load Data into Relation `Days_of_Week`
+    #Subsection: Create Insert Statements for Relation `Days_of_Week`
 
-    #Subsection: Load Data into Relation `Activities
+    #Subsection: Create Insert Statements for Relation `Activities
 
-    #Subsection: Close Connection to MySQL Server
+    #Subsection: Close the File
 
 
 if __name__ == '__main__':
