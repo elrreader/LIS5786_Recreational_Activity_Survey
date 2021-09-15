@@ -67,6 +67,11 @@ def main():
     logging.info(f"File `Insert_Statements_{most_recent_response}.sql` opened.")
 
     #Subsection: Create Insert Statements for Relation `Survey_Answers`
+    Survey_Answers_records = df_Survey_Answers.itertuples(index=False, name=None)
+    SQL_fileIO.write("-- Insert Statements for Survey_Answers\n\n")
+    for record in Survey_Answers_records:
+        SQL_fileIO.write(f"INSERT INTO Survey_Answers VALUES {record};\n")
+    logging.info(f"`Survey_Answers` insert statements in file.")
 
     #Subsection: Create Insert Statements for Relation `Days_of_Week`
 
