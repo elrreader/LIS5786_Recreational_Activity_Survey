@@ -47,6 +47,16 @@ def main():
     logging.info(f"`Days_of_Week` dataframe:\n{df_Days_of_Week.head()}")
 
     #Subsection: Create Dataframe for Relation `Activities`
+    activities_list = CSV_dataframe['What type of activities are you interested in? '].tolist()  # The space in the field name is from the original CSV
+    activities_2D_list = []
+    for entry in activities_list:
+        activities_2D_list.append(entry.split(", "))
+    df_Activities = pd.DataFrame({
+        'Survey_Answer_ID': CSV_dataframe.index,
+        'Activity': activities_2D_list,
+    })
+    df_Activities = df_Activities.explode('Activity', ignore_index=True)
+    logging.info(f"`Activities` dataframe:\n{df_Activities.head()}")
 
 
     #Section: Load Records into MySQL
