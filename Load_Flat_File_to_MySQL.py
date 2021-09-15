@@ -74,6 +74,11 @@ def main():
     logging.info(f"`Survey_Answers` insert statements in file.")
 
     #Subsection: Create Insert Statements for Relation `Days_of_Week`
+    Days_of_Week_records = df_Days_of_Week.itertuples(name=None)
+    SQL_fileIO.write("\n\n-- Insert Statements for Days_of_Week\n\n")
+    for record in Days_of_Week_records:
+        SQL_fileIO.write(f"INSERT INTO Days_of_Week VALUES {record};\n")
+    logging.info("`Days_of_Week` insert statements in file.")
 
     #Subsection: Create Insert Statements for Relation `Activities
 
