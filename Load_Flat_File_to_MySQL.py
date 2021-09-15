@@ -26,7 +26,7 @@ def main():
     #Subsection: Create Dataframe for Relation `Survey_Answers`
     df_Survey_Answers = pd.DataFrame({
         'Survey_Answer_ID': CSV_dataframe.index,
-        'Time_of_Day': CSV_dataframe['What time of day do you prefer to participate in a recreational activity? '],  # The space is in the original CSV
+        'Time_of_Day': CSV_dataframe['What time of day do you prefer to participate in a recreational activity? '],  # The space in the field name is from the original CSV
         'Workout_Location': CSV_dataframe['Where do you prefer to participate in a recreational activity?'],
         'Number_of_People': CSV_dataframe['How many people would you like to work out with in a group activity?'],
         'Max_Price': CSV_dataframe['How much would you feel comfortable paying for an hour long group fitness activity?'],
@@ -35,6 +35,16 @@ def main():
     logging.info(f"`Survey_Answers` dataframe:\n{df_Survey_Answers.head()}")
 
     #Subsection: Create Dataframe for Relation `Days_of_Week`
+    day_of_week_list = CSV_dataframe['What days of the week are you available to participate in a recreational activity?'].tolist()
+    day_of_week_2D_list = []
+    for entry in day_of_week_list:
+        day_of_week_2D_list.append(entry.split(", "))
+    df_Days_of_Week = pd.DataFrame({
+        'Survey_Answer_ID': CSV_dataframe.index,
+        'Day_of_Week': day_of_week_2D_list,
+    })
+    df_Days_of_Week = df_Days_of_Week.explode('Day_of_Week', ignore_index=True)
+    logging.info(f"`Days_of_Week` dataframe:\n{df_Days_of_Week.head()}")
 
     #Subsection: Create Dataframe for Relation `Activities`
 
