@@ -1,5 +1,6 @@
 import logging
 import sys
+import datetime
 import pandas as pd
 
 
@@ -60,9 +61,10 @@ def main():
 
 
     #Section: Create Insert Statement File
-    #Subsection: Find the Most Recent Response for the File Name
-
-    #Subsection: Create the File
+    #Subsection: Create the File, Including the Datetime of the Most Recent Response in the File Name
+    most_recent_response = pd.to_datetime(CSV_dataframe['Timestamp']).max().strftime("%Y-%m-%dT%H.%M")
+    SQL_fileIO = open(f'Insert_Statements_{most_recent_response}.sql', 'w+')
+    logging.info(f"File `Insert_Statements_{most_recent_response}.sql` opened.")
 
     #Subsection: Create Insert Statements for Relation `Survey_Answers`
 
@@ -71,6 +73,8 @@ def main():
     #Subsection: Create Insert Statements for Relation `Activities
 
     #Subsection: Close the File
+    SQL_fileIO.close()
+    logging.info(f"File `Insert_Statements_{most_recent_response}.sql` closed.")
 
 
 if __name__ == '__main__':

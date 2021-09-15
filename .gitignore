@@ -1,3 +1,6 @@
+# Prevent insert statement file from being committed to repo
+Insert_Statements_*.sql
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
