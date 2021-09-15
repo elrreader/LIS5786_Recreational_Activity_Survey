@@ -80,7 +80,12 @@ def main():
         SQL_fileIO.write(f"INSERT INTO Days_of_Week VALUES {record};\n")
     logging.info("`Days_of_Week` insert statements in file.")
 
-    #Subsection: Create Insert Statements for Relation `Activities
+    #Subsection: Create Insert Statements for Relation `Activities`
+    Activities_records = df_Activities.itertuples(name=None)
+    SQL_fileIO.write("\n\n-- Insert Statements for Activities\n\n")
+    for record in Activities_records:
+        SQL_fileIO.write(f"INSERT INTO Activities VALUES {record};\n")
+    logging.info("`Activities` insert statements in file.")
 
     #Subsection: Close the File
     SQL_fileIO.close()
