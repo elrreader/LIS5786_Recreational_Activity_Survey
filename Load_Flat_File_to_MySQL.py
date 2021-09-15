@@ -1,5 +1,4 @@
 import logging
-import os
 import sys
 import pandas as pd
 
@@ -25,6 +24,15 @@ def main():
 
     #Section: Create Dataframe to Load into MySQL
     #Subsection: Create Dataframe for Relation `Survey_Answers`
+    df_Survey_Answers = pd.DataFrame({
+        'Survey_Answer_ID': CSV_dataframe.index,
+        'Time_of_Day': CSV_dataframe['What time of day do you prefer to participate in a recreational activity? '],  # The space is in the original CSV
+        'Workout_Location': CSV_dataframe['Where do you prefer to participate in a recreational activity?'],
+        'Number_of_People': CSV_dataframe['How many people would you like to work out with in a group activity?'],
+        'Max_Price': CSV_dataframe['How much would you feel comfortable paying for an hour long group fitness activity?'],
+        'Max_Distance': CSV_dataframe['How far are you willing to travel for a recreational activity?'],
+    })
+    logging.info(f"`Survey_Answers` dataframe:\n{df_Survey_Answers.head()}")
 
     #Subsection: Create Dataframe for Relation `Days_of_Week`
 
