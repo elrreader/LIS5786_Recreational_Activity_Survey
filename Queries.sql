@@ -14,6 +14,17 @@ FROM Activities
 GROUP BY Activity;
 
 
+-- The number of respondents who picked the saim pair of options from the single-selection fields `Workout_Location` and `Time_of_Day`
+SELECT
+    Workout_Location,
+    Time_of_Day,
+    COUNT(*) AS Participants_Selecting
+FROM Survey_Answers
+GROUP BY
+    Workout_Location,
+    Time_of_Day;
+
+
 -- The number of respondents selecting each option in the multiple-selection field `Activity`
 SELECT
     COUNT(Survey_Answers.Survey_Answer_ID) AS Participants_Selecting,
