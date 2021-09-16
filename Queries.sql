@@ -67,3 +67,44 @@ WHERE Survey_Answers.Survey_Answer_ID = Activities.Survey_Answer_ID
 GROUP BY
     Survey_Answers.Workout_Location,
     Activities.Activity;
+
+
+-- A record for each respondent with the choice they made in the single-selection field `Workout_Location` and the total number of respondents who made that selection
+SELECT
+    Survey_Answers.Workout_Location,
+    Subquery.Total_Participants_Selecting_Location
+FROM
+    Survey_Answers,
+    (
+        SELECT
+            Workout_Location AS Subquery_Location,
+            COUNT(*) AS Total_Participants_Selecting_Location
+        FROM Survey_Answers
+        GROUP BY Subquery_Location
+    ) AS Subquery
+WHERE Survey_Answers.Workout_Location = Subquery.Subquery_Location;
+
+
+-- The percentage of the number of respondents who made a given selection in the single-selection field `Workout_Location` who selected a certain value in the multiple-selection field `Activity`
+SELECT
+    Survey_Answers.Workout_Location,
+    Activities.Activity,
+    Subquery.Number_of_Respondents_Selecting_Option AS Number_Selecting_Location,
+    COUNT(Survey_Answers.Workout_Location) AS Number_Selecting_Location_and_Activity,
+    (COUNT(Survey_Answers.Workout_Location) / Subquery.Number_of_Respondents_Selecting_Option) * 100 AS Percent_Selecting_Location_Who_Chose_Activity
+FROM
+    Survey_Answers,
+    Activities,
+    (
+        SELECT
+            Workout_Location AS Subquery_Option,
+            COUNT(*) AS Number_of_Respondents_Selecting_Option
+        FROM Survey_Answers
+        GROUP BY Workout_Location
+    ) AS Subquery
+WHERE
+    Survey_Answers.Survey_Answer_ID = Activities.Survey_Answer_ID AND
+    Subquery.Subquery_Option = Survey_Answers.Workout_Location
+GROUP BY
+    Survey_Answers.Workout_Location,
+    Activities.Activity;
