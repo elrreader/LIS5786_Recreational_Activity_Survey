@@ -155,3 +155,28 @@ GROUP BY
     Survey_Answers.Number_of_People,
     Activities.Activity
 ORDER BY Percent_Selecting_Size_Who_Chose_Activity DESC;
+
+-- Precent selecting given `Time_of_Day` selecting each `Activity`
+SELECT
+    Survey_Answers.Time_of_Day,
+    Activities.Activity,
+    Subquery.Number_of_Respondents_Selecting_Option AS Number_Selecting_Size,
+    COUNT(Survey_Answers.Time_of_Day) AS Number_Selecting_Time_and_Activity,
+    (COUNT(Survey_Answers.Time_of_Day) / Subquery.Number_of_Respondents_Selecting_Option) * 100 AS Percent_Selecting_Time_Who_Chose_Activity
+FROM
+    Survey_Answers,
+    Activities,
+    (
+        SELECT
+            Time_of_Day AS Subquery_Option,
+            COUNT(*) AS Number_of_Respondents_Selecting_Option
+        FROM Survey_Answers
+        GROUP BY Time_of_Day
+    ) AS Subquery
+WHERE
+    Survey_Answers.Survey_Answer_ID = Activities.Survey_Answer_ID AND
+    Subquery.Subquery_Option = Survey_Answers.Time_of_Day
+GROUP BY
+    Survey_Answers.Time_of_Day,
+    Activities.Activity
+ORDER BY Percent_Selecting_Time_Who_Chose_Activity DESC;
