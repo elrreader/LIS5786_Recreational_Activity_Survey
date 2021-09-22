@@ -119,28 +119,28 @@ ORDER BY Percent_Selecting_Distance_Who_Chose_Day DESC;
 
 -- Percent selecting given `Time_of_Day` selecting each `Day_of_Week`: Is the preferred workout time consistant across all days of the week?
 SELECT
-    Survey_Answers.Max_Distance,
+    Survey_Answers.Time_of_Day,
     Days_of_Week.Day_of_Week,
     Subquery.Number_of_Respondents_Selecting_Option AS Number_Selecting_Distance,
-    COUNT(Survey_Answers.Max_Distance) AS Number_Selecting_Distance_and_Day,
-    (COUNT(Survey_Answers.Max_Distance) / Subquery.Number_of_Respondents_Selecting_Option) * 100 AS Percent_Selecting_Distance_Who_Chose_Day
+    COUNT(Survey_Answers.Time_of_Day) AS Number_Selecting_Time_and_Day,
+    (COUNT(Survey_Answers.Time_of_Day) / Subquery.Number_of_Respondents_Selecting_Option) * 100 AS Percent_Selecting_Time_Who_Chose_Day
 FROM
     Survey_Answers,
     Days_of_Week,
     (
         SELECT
-            Max_Distance AS Subquery_Option,
+            Time_of_Day AS Subquery_Option,
             COUNT(*) AS Number_of_Respondents_Selecting_Option
         FROM Survey_Answers
-        GROUP BY Max_Distance
+        GROUP BY Time_of_Day
     ) AS Subquery
 WHERE
     Survey_Answers.Survey_Answer_ID = Days_of_Week.Survey_Answer_ID AND
-    Subquery.Subquery_Option = Survey_Answers.Max_Distance
+    Subquery.Subquery_Option = Survey_Answers.Time_of_Day
 GROUP BY
-    Survey_Answers.Max_Distance,
+    Survey_Answers.Time_of_Day,
     Days_of_Week.Day_of_Week
-ORDER BY Percent_Selecting_Distance_Who_Chose_Day DESC;
+ORDER BY Percent_Selecting_Time_Who_Chose_Day DESC;
 
 -- Precent selecting given `Number_of_People` selecting each `Activity`: What relationship is there between group sports and preferences for larger groups?
 SELECT
