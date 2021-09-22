@@ -54,6 +54,17 @@ GROUP BY
     Workout_Location
 ORDER BY Participants_Selecting DESC;
 
+-- Crosstab of `Max_Price` and `Max_Distance`
+SELECT
+    Max_Price,
+    Max_Distance,
+    COUNT(*) AS Participants_Selecting
+FROM Survey_Answers
+GROUP BY
+    Max_Price,
+    Max_Distance
+ORDER BY Participants_Selecting DESC;
+
 
 -- PERCENT SELECTED --
 -- Percent selecting given `Workout_Location` selecting each `Activity`: How strong is the relationship between preferred workout location and activity?
